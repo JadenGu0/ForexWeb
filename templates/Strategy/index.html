@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% block content %}
+ <div class="page-header">
+        <h1>Strategys</h1>
+ </div>
+
+       <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>User</th>
+                  <th>Status</th>
+                  <th>Operate</th>
+              </tr>
+            </thead>
+            <tbody>
+    {% for i in strategy %}
+    <tr>
+        <td>{{ i.pk }}</td>
+        <td>{{ i.title }}</td>
+        <td>{{ i.description }}</td>
+        <td>{{ i.user }}</td>
+        <td>{{ i.get_status_display }}</td>
+        <td><a href="/backtest/{{ i.pk }}/">TEST</a></td>
+    </tr>
+    {% endfor %}
+            </tbody>
+          </table>
+        </div>
+       </div>
+
+{% endblock %}

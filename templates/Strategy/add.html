@@ -1,0 +1,15 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+ <div class="page-header">
+        <h1>New Strategy</h1>
+ </div>
+    <form role="form" action="/strategy/new/" method="POST" novalidate="novalidate">
+        {% csrf_token %}
+        {{ obj.as_p }}
+    <button type="submit" class="btn btn-primary">
+      Submit
+    </button>
+    </form>
+{% endblock %}
