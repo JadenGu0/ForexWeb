@@ -1,2 +1,6 @@
+*.pyc
 /.idea/
-.pyc*
+*pyc
+/venv/
+.gitignore
+
