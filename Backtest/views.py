@@ -12,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def run(request,pk):
-    print pk
     backtest_start.delay(pk)
     strategy=Strategy.objects.get(pk=pk)
     strategy.status='PROCESSING'
@@ -23,3 +22,16 @@ def run(request,pk):
 def backtest_index(request):
     backtests=BackTest.objects.all()
     return render(request,'Backtest/index.html',{'index':backtests})
+
+@login_required
+def detail(request,pk):
+    backtest=BackTest.objects.get(pk=pk)
+    image='/home/jaden/Github/ForexWeb/static/img/'+backtest.strategy.title+'.png'
+    return render(request,'Backtest/detail.html',{'image':image,'backtest':backtest})
+
+@login_required
+def delete(request,pk):
+    backtest = BackTest.objects.get(pk=pk)
+    str='rm /home/jaden/Github/ForexWeb/static/img/%s.png' %(backtest.strategy.title)
+    exec(str)
+    return render(request,'Backtest/index.html')

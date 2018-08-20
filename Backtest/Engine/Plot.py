@@ -29,8 +29,7 @@ class Plot(object):
         draw, draw_max, dur_max = self.portfolio.drawdown()
         draw.plot(ax=ax2, color='Red', lw=2.)
         plt.grid(True)
-        plt.show()
-        plt.show()
+        plt.savefig('/home/jaden/Github/ForexWeb/static/img/'+self.strategy_id+'.png')
 
     def plot_candle(self):
         pass

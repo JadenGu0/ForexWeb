@@ -24,7 +24,8 @@ def  backtest_start(strategy_id):
     info=[]
     commond2='info =%s.main()' %(strategy.title)
     exec(commond2)
-    new_backtest=BackTest(info=info,strategy=strategy)
+    new_backtest=BackTest(strategy=strategy,Profit=info[0][1],Sharp=info[1][1],MaxDrawdown=info[2][1],Buynumber=info[3][1],Buyprofit=info[4][1],Sellnumber=info[5][1]\
+                          ,Sellprofit=info[6][1],Winrate=info[7][1],Profitfactor=info[8][1],Std=info[9][1],Mean=info[10][1])
     new_backtest.save()
     strategy.status='TESTED'
     strategy.save()
