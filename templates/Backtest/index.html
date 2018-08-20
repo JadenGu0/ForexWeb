@@ -12,7 +12,11 @@
               <tr>
                 <th>#</th>
                 <th>Strategy</th>
-                <th>info</th>
+                <th>Profit</th>
+                  <th>Sharp</th>
+                  <th>WinRate</th>
+                  <th>ProfitFactor</th>
+                  <th>DELETE</th>
               </tr>
             </thead>
             <tbody>
@@ -20,7 +24,12 @@
     <tr>
         <td>{{ i.pk }}</td>
         <td>{{ i.strategy.title }}</td>
-        <td>{{ i.info }}</td>
+        <td>{{ i.Profit }}</td>
+        <td>{{ i.SharpRation }}</td>
+        <td>{{ i.WinRate }}</td>
+        <td>{{ i.ProfitFactor }}</td>
+        <td><a href="/backtest/detail/{{ i.pk }}/">DETAIL</a></td>
+        <td><a href="/backtest/delete/{{ i.pk }}/">DELETE</a></td>
 
     </tr>
     {% endfor %}

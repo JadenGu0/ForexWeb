@@ -11,13 +11,15 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def add_strategy(request):
     if request.method == 'GET':
-        obj = StrategyForm()
-        return render(request, 'Strategy/add.html', {'obj': obj})
+        return render(request, 'Strategy/add.html')
     if request.method == 'POST':
-        obj = StrategyForm(request.POST)
-        if obj.is_valid():
-            obj.save()
-        return HttpResponseRedirect('/strategy/all/')
+        title=request.POST['Title']
+        desc=request.POST['Description']
+        code=request.POST['Code']
+        strategy=Strategy(title=title,user=request.user,description=desc,code=code,status='INITIAL')
+        strategy.save()
+        strategys = Strategy.objects.filter(user=request.user)
+        return render(request, 'Strategy/index.html', {'strategy': strategys})
 
 
 @login_required
@@ -29,5 +31,12 @@ def strategy_detail(requset, pk):
 
 @login_required
 def strategy_index(request):
+    strategys = Strategy.objects.filter(user=request.user)
+    return render(request, 'Strategy/index.html', {'strategy': strategys})
+
+@login_required
+def delete(request,pk):
+    strategy=Strategy.objects.get(pk=pk)
+    strategy.delete()
     strategys = Strategy.objects.filter(user=request.user)
     return render(request, 'Strategy/index.html', {'strategy': strategys})

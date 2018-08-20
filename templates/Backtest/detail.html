@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+ <div class="page-header">
+        <h1>Report of {{ backtest.strategy.title }}</h1>
+ </div>
+    <div class="row">
+     <div class="col-sm-6 col-md-3" style="border:1px">
+        <img src="/static/img/{{ image }}">
+    </div>
+           <div class="col-sd-6">
+          <table class="table">
+              <thead>
+              <tr>
+                <th>Profit</th>
+                <th>Sharp</th>
+                <th>MaxDrawDown</th>
+                <th>BuyNumber</th>
+                  <th>ButProfit</th>
+                  <th>SellNumber</th>
+                  <th>SellProfit</th>
+                  <th>Winrate</th>
+                  <th>ProfitFactor</th>
+                  <th>Std</th>
+                  <th>MeanOfProfit</th>
+              </tr>
+            </thead>
+    <tr>
+        <td>{{ backtest.Profit }}</td>
+        <td>{{ backtest.SharpRation }}</td>
+        <td>{{ backtest.MaxDrawdown }}</td>
+        <td>{{ backtest.BuyNumber }}</td>
+        <td>{{ backtest.BuyProfit }}</td>
+        <td>{{ backtest.SellNumber }}</td>
+        <td>{{ backtest.SellProfit }}</td>
+        <td>{{ backtest.WinRate }}</td>
+        <td>{{ backtest.ProfitFactor }}</td>
+        <td>{{ backtest.Std }}</td>
+        <td>{{ backtest.MeanOfProfit }}</td>
+    </tr>
+          </table>
+           </div>
+    </div>
+{% endblock %}

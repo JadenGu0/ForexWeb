@@ -20,8 +20,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^strategy/', include('Strategy.urls')),
     url(r'^backtest/', include('Backtest.urls')),
-    url(r'signin/',views.signin),
-    url(r'logout/$',views.logout_mine),
+    url(r'^signin/',views.signin),
+    url(r'^logout/$',views.logout_mine),
     url(r'^captcha', include('captcha.urls')),
     url(r'',views.main)
 ]

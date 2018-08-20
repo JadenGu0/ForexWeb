@@ -10,13 +10,13 @@ class Strategy(models.Model):
         ('INITIAL','INITIAL'),
         ('SAVED','SAVED'),
         ('PROCESSING','PROCESSING'),
-        ('TESTED','TESTES')
+        ('TESTED','TESTED')
     )
     user=models.ForeignKey(User)
     title=models.CharField(max_length=100)
     description=models.CharField(max_length=500,blank=True)
     code=models.TextField()
-    status=models.CharField(max_length=50,choices=STATUS_CHOICES)
+    status=models.CharField(max_length=50,choices=STATUS_CHOICES,default='INITIAL')
     def __str__(self):
         return self.title
 

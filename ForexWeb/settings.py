@@ -25,7 +25,7 @@ SECRET_KEY = 'dp0vofgjhfodxl=%ie5a*)6zuaklf8yn&qsl$uhujslyrlx=04'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.7','127.0.0.1']
 
 
 # Application definition
@@ -53,7 +53,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ForexWeb.urls'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

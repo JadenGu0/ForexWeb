@@ -16,6 +16,7 @@
                 <th>User</th>
                   <th>Status</th>
                   <th>Operate</th>
+                  <th>Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -27,6 +28,7 @@
         <td>{{ i.user }}</td>
         <td>{{ i.get_status_display }}</td>
         <td><a href="/backtest/{{ i.pk }}/">TEST</a></td>
+        <td><a href="/strategy/delete/{{ i.pk }}/">DELETE</a></td>
     </tr>
     {% endfor %}
             </tbody>
