@@ -44,5 +44,13 @@ def delete(request,pk):
 @login_required
 def detail(request,pk):
     strategy=Strategy.objects.get(pk=pk)
-    form=StrategyForm(instance=strategy)
-    return render(request,'Strategy/detail.html',{'strategy':form})
+    return render(request,'Strategy/detail.html',{'strategy':strategy})
+
+@login_required
+def update(request,pk):
+    strategy=Strategy.objects.get(pk=pk)
+    print request.POST
+    strategy.code=request.POST['code']
+    strategy.status=request.POST['status']
+    strategy.save()
+    return HttpResponseRedirect('/strategy/all/')

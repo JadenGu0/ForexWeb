@@ -1,9 +1,15 @@
 
 {% extends "base.html" %}
+                  {% block active %}
+            <li ><a href="/">Home</a></li>
+            <li class="active"><a href="/strategy/all/">Strategy</a></li>
+            <li><a href="/backtest/">Backtest</a></li>
+              {% endblock %}
 {% block content %}
  <div class="page-header">
         <h1>Strategys</h1>
  </div>
+
 
        <div class="row">
         <div class="col-md-6">
@@ -23,7 +29,7 @@
     {% for i in strategy %}
     <tr>
         <td>{{ i.pk }}</td>
-        <td><a href="/strategy/detial/{{ i.pk }}">{{ i.title }}</a></td>
+        <td><a href="/strategy/detail/{{ i.pk }}/">{{ i.title }}</a></td>
         <td>{{ i.description }}</td>
         <td>{{ i.user }}</td>
         <td>{{ i.get_status_display }}</td>

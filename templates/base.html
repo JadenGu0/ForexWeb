@@ -48,9 +48,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="/strategy/all/">Strategy</a></li>
-            <li><a href="/backtest/">Backtest</a></li>
+              {% block active %}
+              {% endblock %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/signin/">Signin</a></li>

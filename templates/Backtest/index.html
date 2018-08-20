@@ -1,10 +1,14 @@
 
 {% extends "base.html" %}
+                      {% block active %}
+            <li ><a href="/">Home</a></li>
+            <li><a href="/strategy/all/">Strategy</a></li>
+            <li class="active"><a href="/backtest/">Backtest</a></li>
+              {% endblock %}
 {% block content %}
  <div class="page-header">
         <h1>Backtest</h1>
  </div>
-
 
        <div class="row">
         <div class="col-md-6">
@@ -17,7 +21,6 @@
                   <th>Sharp</th>
                   <th>WinRate</th>
                   <th>ProfitFactor</th>
-                  <th>DETAIL</th>
                   <th>DELETE</th>
               </tr>
             </thead>
@@ -25,12 +28,11 @@
     {% for i in index %}
     <tr>
         <td>{{ i.pk }}</td>
-        <td>{{ i.strategy.title }}</td>
+        <td><a href="/backtest/detail/{{ i.pk }}/">{{ i.strategy.title }}</a></td>
         <td>{{ i.Profit }}</td>
         <td>{{ i.Sharp }}</td>
         <td>{{ i.Winrate }}</td>
         <td>{{ i.Profitfactor }}</td>
-        <td><a href="/backtest/detail/{{ i.pk }}/">DETAIL</a></td>
         <td><a href="/backtest/del/{{ i.pk }}/">DELETE</a></td>
 
     </tr>

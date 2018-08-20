@@ -5,7 +5,11 @@
     <link href="{% static 'css/login.css' %}" rel="stylesheet"/>
 {% endblock %}
 
-
+              {% block active %}
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="/strategy/all/">Strategy</a></li>
+            <li><a href="/backtest/">Backtest</a></li>
+              {% endblock %}
 
 {% block content %}
     <div class="container">
