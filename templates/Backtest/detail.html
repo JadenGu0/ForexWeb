@@ -4,8 +4,9 @@
         <h1>Report of {{ backtest.strategy.title }}</h1>
  </div>
     <div class="row">
-     <div class="col-sm-6 col-md-3" style="border:1px">
-        <img src="/static/img/{{ image }}">
+        <div class="center">
+        <img src="{{ image }}" class="img-responsive center-block">
+        </div>
     </div>
            <div class="col-sd-6">
           <table class="table">
@@ -39,5 +40,57 @@
     </tr>
           </table>
            </div>
-    </div>
+
+
+           <div class="col-sd-6">
+          <table class="table">
+              <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Lot</th>
+                <th>Type</th>
+                <th>OpenTime</th>
+                  <th>CloseTime</th>
+                  <th>OpenPrice</th>
+                  <th>ClosePrice</th>
+                  <th>Mount</th>
+              </tr>
+            </thead>
+    {% for i in order %}
+        <tr>
+
+        <td>{{ i.Symbol }}</td>
+        <td>{{ i.Lot }}</td>
+            {% ifequal i.Type 0 %}
+        <td>Buy</td>
+            {% endifequal %}
+            {% ifequal i.Type 1 %}
+        <td>Sell</td>
+            {% endifequal %}
+        <td>{{ i.OpenTime }}</td>
+        <td>{{ i.CloseTime }}</td>
+        <td>{{ i.OpenPrice }}</td>
+        <td>{{ i.ClosePrice }}</td>
+        <td>{{ i.Mount}}</td>
+
+    </tr>
+              {% endfor %}
+          </table>
+           </div>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if order.has_previous %}
+            <a href="?page={{ order.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ order.number }} of {{ order.paginator.num_pages }}.
+        </span>
+
+        {% if order.has_next %}
+            <a href="?page={{ order.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}

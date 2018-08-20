@@ -1,37 +1,66 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render,HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect
 from tasks import backtest_start
 from models import BackTest
 from Strategy.models import Strategy
 from django.contrib.auth.decorators import login_required
+import pandas as pd
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
 
 
 @login_required
-def run(request,pk):
+def run(request, pk):
     backtest_start.delay(pk)
-    strategy=Strategy.objects.get(pk=pk)
-    strategy.status='PROCESSING'
+    strategy = Strategy.objects.get(pk=pk)
+    strategy.status = 'PROCESSING'
     strategy.save()
     return HttpResponseRedirect('/strategy/all/')
 
+
 @login_required
 def backtest_index(request):
-    backtests=BackTest.objects.all()
-    return render(request,'Backtest/index.html',{'index':backtests})
+    backtests = BackTest.objects.all()
+    return render(request, 'Backtest/index.html', {'index': backtests})
+
 
 @login_required
-def detail(request,pk):
-    backtest=BackTest.objects.get(pk=pk)
-    image='/home/jaden/Github/ForexWeb/static/img/'+backtest.strategy.title+'.png'
-    return render(request,'Backtest/detail.html',{'image':image,'backtest':backtest})
-
-@login_required
-def delete(request,pk):
+def detail(request, pk):
     backtest = BackTest.objects.get(pk=pk)
-    str='rm /home/jaden/Github/ForexWeb/static/img/%s.png' %(backtest.strategy.title)
-    exec(str)
-    return render(request,'Backtest/index.html')
+    image = '/static/img/' + backtest.strategy.title + '.png'
+    order=pd.read_csv('/home/jaden/Github/ForexWeb/Backtest/HistoryData/ResultData/Order_'+backtest.strategy.title+'.csv')
+    order_list=[]
+    for i in order.values:
+        new_data={}
+        new_data['Symbol']=i[1]
+        new_data['Lot']=i[2]
+        new_data['Type']=i[3]
+        new_data['OpenTime']=i[4]
+        new_data['CloseTime']=i[5]
+        new_data['OpenPrice']=i[6]
+        new_data['ClosePrice']=i[7]
+        new_data['Mount']=i[11]
+        order_list.append(new_data)
+    paginator = Paginator(order_list, 20)
+    page = request.GET.get('page', 1)
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+
+        contacts = paginator.page(1)
+    except EmptyPage:
+
+        contacts = paginator.page(paginator.num_pages)
+    return render(request, 'Backtest/detail.html', {'image': image, 'backtest': backtest,'order':contacts})
+
+
+@login_required
+def delete(request, pk):
+    backtest = BackTest.objects.get(pk=pk)
+    # str='rm /home/jaden/Github/ForexWeb/static/img/%s.png' %(backtest.strategy.title)
+    # exec(str)
+    backtest.delete()
+    return HttpResponseRedirect('/backtest/')

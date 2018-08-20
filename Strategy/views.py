@@ -40,3 +40,9 @@ def delete(request,pk):
     strategy.delete()
     strategys = Strategy.objects.filter(user=request.user)
     return render(request, 'Strategy/index.html', {'strategy': strategys})
+
+@login_required
+def detail(request,pk):
+    strategy=Strategy.objects.get(pk=pk)
+    form=StrategyForm(instance=strategy)
+    return render(request,'Strategy/detail.html',{'strategy':form})

@@ -23,7 +23,7 @@
     {% for i in strategy %}
     <tr>
         <td>{{ i.pk }}</td>
-        <td>{{ i.title }}</td>
+        <td><a href="/strategy/detial/{{ i.pk }}">{{ i.title }}</a></td>
         <td>{{ i.description }}</td>
         <td>{{ i.user }}</td>
         <td>{{ i.get_status_display }}</td>

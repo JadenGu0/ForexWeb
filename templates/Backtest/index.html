@@ -5,6 +5,7 @@
         <h1>Backtest</h1>
  </div>
 
+
        <div class="row">
         <div class="col-md-6">
           <table class="table">
@@ -16,6 +17,7 @@
                   <th>Sharp</th>
                   <th>WinRate</th>
                   <th>ProfitFactor</th>
+                  <th>DETAIL</th>
                   <th>DELETE</th>
               </tr>
             </thead>
@@ -29,7 +31,7 @@
         <td>{{ i.Winrate }}</td>
         <td>{{ i.Profitfactor }}</td>
         <td><a href="/backtest/detail/{{ i.pk }}/">DETAIL</a></td>
-        <td><a href="/backtest/delete/{{ i.pk }}/">DELETE</a></td>
+        <td><a href="/backtest/del/{{ i.pk }}/">DELETE</a></td>
 
     </tr>
     {% endfor %}
