@@ -8,17 +8,20 @@ from Strategy.models import Strategy
 from django.contrib.auth.decorators import login_required
 import pandas as pd
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 
 @login_required
 def run(request, pk):
-    backtest_start.delay(pk)
-    strategy = Strategy.objects.get(pk=pk)
-    strategy.status = 'PROCESSING'
-    strategy.save()
-    return HttpResponseRedirect('/strategy/all/')
+    try:
+        backtest_start.delay(pk)
+        strategy = Strategy.objects.get(pk=pk)
+        strategy.status = 'PROCESSING'
+        strategy.save()
+        return HttpResponseRedirect('/strategy/all/')
+    except ObjectDoesNotExist as e:
+        return render(request, 'error.html', {'error': e})
 
 
 @login_required
@@ -29,7 +32,10 @@ def backtest_index(request):
 
 @login_required
 def detail(request, pk):
-    backtest = BackTest.objects.get(pk=pk)
+    try:
+        backtest = BackTest.objects.get(pk=pk)
+    except ObjectDoesNotExist as e:
+        return render(request, 'error.html', {'error': e})
     image = '/static/img/' + backtest.strategy.title + '.png'
     order=pd.read_csv('/home/jaden/Github/ForexWeb/Backtest/HistoryData/ResultData/Order_'+backtest.strategy.title+'.csv')
     order_list=[]
@@ -59,8 +65,11 @@ def detail(request, pk):
 
 @login_required
 def delete(request, pk):
-    backtest = BackTest.objects.get(pk=pk)
-    # str='rm /home/jaden/Github/ForexWeb/static/img/%s.png' %(backtest.strategy.title)
-    # exec(str)
-    backtest.delete()
-    return HttpResponseRedirect('/backtest/')
+    try:
+        backtest = BackTest.objects.get(pk=pk)
+        # str='rm /home/jaden/Github/ForexWeb/static/img/%s.png' %(backtest.strategy.title)
+        # exec(str)
+        backtest.delete()
+        return HttpResponseRedirect('/backtest/')
+    except ObjectDoesNotExist as e:
+        return render(request, 'error.html', {'error': e})

@@ -10,7 +10,7 @@ import pandas as pd
 from Backtest.Engine.Plot import Plot
 
 
-class MA_Cross(Strategy):
+class MA(Strategy):
     """
     A Simple MA Cross Strategy.
     """
@@ -36,7 +36,7 @@ class MA_Cross(Strategy):
                     stoploss = openprice - 0.00001 * 200
                     takeprofit = openprice + 0.00001 * 200
                     #define the buy order event instance
-                    order = OrderSendEvent(s, OrderType.BUY, 10, stoploss, takeprofit,
+                    order = OrderSendEvent(s, OrderType.BUY, 1, stoploss, takeprofit,
                                            self.bars.get_latest_bar_datetime(s), OrderStatus.HOLDING, openprice,
                                            self.spread)
                     #put the buy order event into the queue
@@ -45,24 +45,23 @@ class MA_Cross(Strategy):
                     openprice = self.bars.get_latest_bar_value(s, 'Open')
                     stoploss = openprice + 0.00001 * 200
                     takeprofit = openprice - 0.00001 * 200
-                    order = OrderSendEvent(s, OrderType.SELL, 10, stoploss, takeprofit,
+                    order = OrderSendEvent(s, OrderType.SELL, 1, stoploss, takeprofit,
                                            self.bars.get_latest_bar_datetime(s), OrderStatus.HOLDING, openprice,
                                            self.spread)
                     self.events.put(order)
 
 
 def main():
-    csv_dir = '/home/jaden/Github/ForexWeb/Backtest/HistoryData//'
     symbol_list = ['EURUSD_15M']
     init_captial = 10000.0
     heartbeat = 0
-    start_time = '2017.10.01'
-    end_time = '2017.10.31'
+    start_time = '2017.01.01'
+    end_time = '2017.01.31'
     backtest = Test(
-        csv_dir=csv_dir, symbol_list=symbol_list, initial_capital=init_captial, heartbeat=heartbeat,
+        symbol_list=symbol_list, initial_capital=init_captial, heartbeat=heartbeat,
         start_date=start_time,
-        end_date=end_time, data_handler=HistoricCSVDataHandler, portfolio=Portfolio, strategy=MA_Cross,
-        strategy_id=getattr(MA_Cross, '__name__'), spread=0.00010, commission=0, plot=Plot
+        end_date=end_time, data_handler=HistoricCSVDataHandler, portfolio=Portfolio, strategy=MA,
+        strategy_id=getattr(MA, '__name__'), spread=0.00010, commission=0, plot=Plot
     )
     res=backtest.simulate_trading()
     return res

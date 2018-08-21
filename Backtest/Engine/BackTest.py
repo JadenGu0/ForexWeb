@@ -14,11 +14,11 @@ class Test(object):
     """
 
     def __init__(
-            self, csv_dir, symbol_list, initial_capital,
+            self,  symbol_list, initial_capital,
             heartbeat, start_date, end_date, data_handler,
             portfolio, strategy, strategy_id, spread, commission, plot
     ):
-        self.csv_dir = csv_dir
+        self.csv_dir = '/home/jaden/Github/ForexWeb/Backtest/HistoryData//'
         self.symbol_list = symbol_list
         self.initial_capital = initial_capital
         self.heartbeat = heartbeat
