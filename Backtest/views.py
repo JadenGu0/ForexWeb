@@ -15,7 +15,7 @@ from django.core.exceptions import ObjectDoesNotExist
 @login_required
 def run(request, pk):
     try:
-        backtest_start.delay(pk)
+        res=backtest_start.delay(pk)
         strategy = Strategy.objects.get(pk=pk)
         strategy.status = 'PROCESSING'
         strategy.save()
@@ -71,5 +71,13 @@ def delete(request, pk):
         # exec(str)
         backtest.delete()
         return HttpResponseRedirect('/backtest/')
+    except ObjectDoesNotExist as e:
+        return render(request, 'error.html', {'error': e})
+
+@login_required
+def error(request,pk):
+    try:
+        backtest=BackTest.objects.get(pk=pk)
+        return render(request,'Backtest/error.html',{'error':backtest.error_info})
     except ObjectDoesNotExist as e:
         return render(request, 'error.html', {'error': e})

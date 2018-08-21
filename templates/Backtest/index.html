@@ -17,22 +17,36 @@
               <tr>
                 <th>#</th>
                 <th>Strategy</th>
+                  <th>Status</th>
                 <th>Profit</th>
                   <th>Sharp</th>
                   <th>WinRate</th>
                   <th>ProfitFactor</th>
+                  <th>Info</th>
                   <th>DELETE</th>
               </tr>
             </thead>
             <tbody>
     {% for i in index %}
     <tr>
-        <td>{{ i.pk }}</td>
+        <td>{{ i.task }}</td>
+        {% ifnotequal i.status 'ERROR'%}
         <td><a href="/backtest/detail/{{ i.pk }}/">{{ i.strategy.title }}</a></td>
+        {% endifnotequal %}
+        {% ifequal i.status 'ERROR'%}
+        <td>{{ i.strategy.title }}</td>
+        {% endifequal %}
+        <td>{{ i.status }}</td>
         <td>{{ i.Profit }}</td>
         <td>{{ i.Sharp }}</td>
         <td>{{ i.Winrate }}</td>
         <td>{{ i.Profitfactor }}</td>
+        {% ifnotequal i.status 'ERROR'%}
+            <td>Error_Info</td>
+        {% endifnotequal %}
+        {% ifequal i.status 'ERROR'%}
+            <td><a href="/backtest/error/{{ i.pk }}/">Error_Info</td>
+        {% endifequal %}
         <td><a href="/backtest/del/{{ i.pk }}/">DELETE</a></td>
 
     </tr>

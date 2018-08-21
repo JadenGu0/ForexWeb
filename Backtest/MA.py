@@ -56,7 +56,7 @@ def main():
     init_captial = 10000.0
     heartbeat = 0
     start_time = '2017.01.01'
-    end_time = '2017.01.31'
+    end_time = '2017.12.31'
     backtest = Test(
         symbol_list=symbol_list, initial_capital=init_captial, heartbeat=heartbeat,
         start_date=start_time,
